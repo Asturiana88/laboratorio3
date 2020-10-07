@@ -2,31 +2,30 @@
 exports.__esModule = true;
 exports.VerificarValidacionesLogin = exports.ValidarCamposVacios = void 0;
 function AdministrarValidaciones(e) {
-    var maniana = document.getElementById('mañana');
-    var tarde = document.getElementById('tarde');
-    var noche = document.getElementById('noche');
+    // Valida todos los campos para la creacion de empleados
     var sueldo = document.getElementById('txtSueldo');
-    ObtenerSueldoMaximo(ObtenerTurnoSeleccionado());
-    var turnosRb = [maniana, tarde, noche];
-    var min = 8000;
-    for (var index = 0; index < turnosRb.length; index++) {
-        var turno = turnosRb[index];
-        if (turno.checked && turno == maniana) {
-            validarRangoNumerico(parseInt(sueldo.value), min, 20000);
-        }
-        if (turno.checked && turno == tarde) {
-            validarRangoNumerico(parseInt(sueldo.value), min, 18500);
-        }
-        if (turno.checked && turno == noche) {
-            validarRangoNumerico(parseInt(sueldo.value), min, 25000);
-        }
+    var sueldoMaximo = ObtenerSueldoMaximo(ObtenerTurnoSeleccionado());
+    var sueldoMaximoSuperado = false;
+    // por defecto escondemos el * advertencia de sueldo
+    // y seteamos el valor sueldo maximo superado a false
+    AdministrarSpanError(sueldo.id + 'Span', false);
+    if (parseInt(sueldo.value) > sueldoMaximo) {
+        // De ser superado seteamos el sueldo superado a true y mostramos el *
+        sueldoMaximoSuperado = true;
+        AdministrarSpanError(sueldo.id + 'Span', true);
     }
-    var inputIds = ['txtSueldo', 'txtDni', 'txtNomb', 'txtApe', 'txtLegajo', 'fileToUpload'];
+    // listamos los inputs a ser evaluados
+    var inputIds = [
+        'txtSueldo', 'txtDni', 'txtNomb', 'txtApe', 'txtLegajo', 'fileToUpload'
+    ];
     for (var index = 0; index < inputIds.length; index++) {
-        var element = inputIds[index];
-        AdministrarSpanError(element + 'Span', !ValidarCamposVacios(element));
+        // por cada elemento verificamos si tiene campos vacios
+        // si esta vacio agregamos el * de error
+        AdministrarSpanError(inputIds[index] + 'Span', !ValidarCamposVacios(inputIds[index]));
     }
-    if (!VerificarValidacionesLogin() || !validarCombo("sex", "---")) {
+    if (!VerificarValidacionesLogin()
+        || !validarCombo("sex", "---")
+        || sueldoMaximoSuperado) {
         e.preventDefault();
     }
 }

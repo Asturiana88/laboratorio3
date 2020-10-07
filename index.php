@@ -1,6 +1,6 @@
 <?php
 include 'empleado.php';
-include '../validarSesion.php';
+include './validarSesion.php';
 
 $carlos = new Empleado("carlos", "deucol",33200322,"M",2010, 50000, "Tarde");
 $listaPeople = array(

@@ -37,12 +37,12 @@ class Fabrica implements IArchivo{
     }
 
     function EliminarEmpleado(Empleado $emp):bool{
-        $new_empleados = array();
         $modified = false;
-        for ($i=0; count($this->_empleados) < $i; $i++) { 
-            if($this->_empleados[$i] !== $emp){
+        $new_empleados = array();
+        foreach($this->_empleados as $empleado) {
+            if($empleado->GetLegajo() !== $emp->GetLegajo()){
                // $this->AgregarEmpleado($this->_empleados[$i]);
-               array_push($new_empleados, $this->_empleados[$i]);
+               array_push($new_empleados, $empleado);
             } else {
                 $modified = true;
             }
