@@ -7,6 +7,7 @@ abstract class Persona {
    private $_nombre;
    private $_sexo;
    private $idioma;
+   
 
     function __construct($_nombre, $_apellido,$_dni,$_sexo){
        $this->nombre = $_nombre;
@@ -35,7 +36,7 @@ abstract class Persona {
 
      function __toString()
    {
-       return $this->apellido . '-' .$this->nombre . '-' .$this->sexo . '-' .$this->dni ;
+       return $this->nombre . '-' .$this->apellido . '-' .$this->dni . '-' .$this->sexo ;
    }
 }
 ?>

@@ -1,0 +1,12 @@
+Test1-Cata-1000002-F-101-9000-Mañana
+-
+Test1-Cata-1000003-M-106-10000-Tarde
+-
+Test1-Cata-1000003-M-101-10000-Noche
+-
+Test1-Cata-7500000-M-100-9500-Mañana
+-
+Test1-Cataoooo-1000004-F-103-9500-Mañana
+-
+Test1-Cata-1000000-M-100-8000-Mañana-
+Test1-Cata-1000000-M-100-8000-Mañana-

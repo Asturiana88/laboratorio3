@@ -3,10 +3,7 @@ function AdministrarValidaciones(e) {
     var tarde = document.getElementById('tarde');
     var noche = document.getElementById('noche');
     var sueldo = document.getElementById('txtSueldo');
-    console.log("Admin validaciones!!!");
-    validarCombo("sex", "---");
     ObtenerSueldoMaximo(ObtenerTurnoSeleccionado());
-    e.preventDefault();
     var turnosRb = [maniana, tarde, noche];
     var min = 8000;
     for (var index = 0; index < turnosRb.length; index++) {
@@ -24,16 +21,15 @@ function AdministrarValidaciones(e) {
     var inputIds = ['txtSueldo', 'txtDni', 'txtNomb', 'txtApe', 'txtLegajo'];
     for (var index = 0; index < inputIds.length; index++) {
         var element = inputIds[index];
-        if (!ValidarCamposVacios(element)) {
-            alert(element);
-            alert("Falta completar campos, verificar");
-            return;
-        }
+        AdministrarSpanError(element + 'Span', !ValidarCamposVacios(element));
+    }
+    if (!VerificarValidacionesLogin() || !validarCombo("sex", "---")) {
+        e.preventDefault();
     }
 }
 function ObtenerTurnoSeleccionado() {
     console.log("Validar turno seleccionado");
-    var rbturno = document.querySelector('input[name="rdoTurno"]:checked');
+    var rbturno = document.querySelector('input[name="turno"]:checked');
     return rbturno.value;
 }
 function ObtenerSueldoMaximo(turno) {
@@ -47,7 +43,6 @@ function ObtenerSueldoMaximo(turno) {
     }
 }
 function validarCombo(idCombo, invalidValue) {
-    alert("Validando Combos");
     var sexo = document.getElementById(idCombo);
     return sexo.value != invalidValue;
 }
@@ -64,4 +59,53 @@ function validarRangoNumerico(sueldo, min, max) {
     else {
         return true;
     }
+}
+function AdministrarSpanError(elemento, error) {
+    var elemSpan = document.getElementById(elemento);
+    if (elemSpan) {
+        elemSpan.style.display = 'none';
+        if (error) {
+            elemSpan.style.display = 'block';
+            elemSpan.style.color = 'red';
+        }
+    }
+}
+function VerificarValidacionesLogin() {
+    var spanList = document.querySelectorAll('span');
+    for (var index = 0; index < spanList.length; index++) {
+        var span = spanList[index];
+        if (span.style.display == 'block') {
+            return false;
+        }
+    }
+    return true;
+}
+function AdministrarSpanError(elemento, error) {
+    var elemSpan = document.getElementById(elemento);
+    if (elemSpan) {
+        elemSpan.style.display = 'none';
+        if (error) {
+            elemSpan.style.display = 'block';
+            elemSpan.style.color = 'red';
+        }
+    }
+}
+function ValidarCamposVacios(id) {
+    var elemento_a_evaluar = document.getElementById(id);
+    return Boolean(elemento_a_evaluar && elemento_a_evaluar.value);
+}
+function VerificarValidacionesLogin() {
+    var spanList = document.querySelectorAll('span');
+    for (var index = 0; index < spanList.length; index++) {
+        var span = spanList[index];
+        if (span.style.display == 'block') {
+            return false;
+        }
+    }
+    return true;
+}
+function AdministrarValidacionesLogin(e) {
+    AdministrarSpanError('txtDniSpan', !ValidarCamposVacios('txtDni'));
+    AdministrarSpanError('txtApeSpan', !ValidarCamposVacios('txtApe'));
+    VerificarValidacionesLogin();
 }

@@ -1,12 +1,10 @@
-function AdministrarValidaciones(e : any) {
+export default function AdministrarValidaciones(e : any) {
     var maniana = (<HTMLInputElement> document.getElementById('mañana'))
     var tarde = (<HTMLInputElement> document.getElementById('tarde'))
     var noche = (<HTMLInputElement> document.getElementById('noche'))
     var sueldo = (<HTMLInputElement> document.getElementById('txtSueldo'))
-    console.log("Admin validaciones!!!");
-    validarCombo("sex", "---")
+    
     ObtenerSueldoMaximo(ObtenerTurnoSeleccionado())
-    e.preventDefault()
 
 
     var turnosRb = [maniana, tarde, noche]
@@ -24,20 +22,20 @@ function AdministrarValidaciones(e : any) {
         }
     }
     
-    var inputIds = ['txtSueldo', 'txtDni', 'txtNomb', 'txtApe', 'txtLegajo']
+    var inputIds = ['txtSueldo', 'txtDni', 'txtNomb', 'txtApe', 'txtLegajo', 'fileToUpload']
     for (let index = 0; index < inputIds.length; index++) {
         var element = inputIds[index];
-        if(!ValidarCamposVacios(element)){
-            alert(element)
-            alert(`Falta completar campos, verificar`)
-            return
-        }        
+        AdministrarSpanError(element+'Span', !ValidarCamposVacios(element))
+    }
+    if (!VerificarValidacionesLogin() || !validarCombo("sex", "---")) {
+
+        e.preventDefault()
     }
 }
 
 function ObtenerTurnoSeleccionado():string {
         console.log("Validar turno seleccionado");
-        const rbturno = <HTMLInputElement> document.querySelector('input[name="rdoTurno"]:checked')
+        const rbturno = <HTMLInputElement> document.querySelector('input[name="turno"]:checked')
         return rbturno.value
 }
 
@@ -53,12 +51,11 @@ function ObtenerSueldoMaximo(turno:string): number{
 }
 
 function validarCombo(idCombo:string, invalidValue:string):boolean{
-   alert("Validando Combos");
     var sexo = (<HTMLInputElement> document.getElementById(idCombo))
     return sexo.value != invalidValue
 }
 
-function ValidarCamposVacios(id:string):boolean {
+export function ValidarCamposVacios(id:string):boolean {
     var elemento_a_evaluar = (<HTMLInputElement> document.getElementById(id))
     return Boolean(elemento_a_evaluar && elemento_a_evaluar.value)
 }
@@ -70,3 +67,25 @@ function validarRangoNumerico(sueldo: number, min:number, max:number):boolean{
         return false
     }else {return true}
  }
+
+ function AdministrarSpanError(elemento:string, error: boolean): void{
+    var elemSpan = (<HTMLElement> document.getElementById(elemento))
+    if(elemSpan){
+        elemSpan.style.display = 'none'
+        if (error){
+            elemSpan.style.display = 'block'
+            elemSpan.style.color = 'red'
+        }
+    }
+}  
+
+export function VerificarValidacionesLogin(): boolean{
+    var spanList = document.querySelectorAll('span')
+    for (let index = 0; index < spanList.length; index++) {
+        const span = spanList[index];
+        if(span.style.display == 'block'){
+            return false
+        }
+    }
+    return true
+}
