@@ -27,10 +27,11 @@ if ($handle) {
 if($empleado){
     $Mifabrica = new Fabrica("Mi Fabrica", 7);
     $Mifabrica->TraerDeArchivo('./archivos/empleados.txt');
-    $Mifabrica->EliminarEmpleado($empleado);
-    $Mifabrica->GuardarEnArchivo('./archivos/empleados.txt');
+    if($Mifabrica->EliminarEmpleado($empleado)){
+        $Mifabrica->GuardarEnArchivo('./archivos/empleados.txt');
+    };
 } else{
-       echo '<p>No se pudo Eliminar el empleado</p>';
+    echo '<p>No se pudo Eliminar el empleado</p>';
 }
 
 ?>

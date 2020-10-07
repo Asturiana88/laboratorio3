@@ -59,6 +59,7 @@ if ($handle) {
         </tr>
     </tbody>    
 </table> 
+    <a style="margin-left: 30%;" href="/index.html">Agregar nuevo empleado</a>
     <a style="margin-left: 30%;" href="/cerrarSesion.php">Desloguearse</a>
 </div>
 </body>
